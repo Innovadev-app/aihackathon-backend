@@ -21,8 +21,12 @@
           aws-region: 'us-west-2'
           role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
           role-session-name: serverlessBuildActions
-      - name: test
+      - name: install sam
         shell: bash
         run: |
           wget https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip
           unzip aws-sam-cli-linux-x86_64.zip -d sam-installation
+      - name: sam test
+        shell: bash
+        run: |
+          sam --version
