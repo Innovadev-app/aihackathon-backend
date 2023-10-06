@@ -1,0 +1,27 @@
+---
+  name: serverless
+  on:
+    push:
+      branches:
+        - cicd
+
+  jobs:
+    deploy-lambda:
+      name: deploy
+      runs-on: ubuntu-latest
+      permissions:
+        id-token: write
+        contents: read
+      steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-region: ${{ secrets.AWS_REGION }}
+          role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
+          role-session-name: serverlessBuildActions
+      - name: test
+        shell: bash
+        run: |
+          aws s3 ls
