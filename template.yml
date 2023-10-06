@@ -1,0 +1,38 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: A starter AWS Lambda function.
+Resources:
+  bedrockinvoke:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Architectures: 
+        - arm64
+      Handler: lambda_function.lambda_handler
+      Runtime: python3.11
+      Layers: 
+        - arn:aws:lambda:us-west-2:378530652592:layer:boto3-mylayer:1
+      Policies: 
+        - Statement: 
+          - Sid: BedRockPolicy
+            Effect: Allow
+            Action: bedrock:InvokeModel
+            Resource: 
+              - arn:aws:bedrock:*:560466782437:provisioned-model/*
+              - arn:aws:bedrock:*::foundation-model/*
+              - arn:aws:bedrock:*:560466782437:custom-model/*
+          - Sid: AllowLogs
+            Effect: Allow
+            Action: logs:CreateLogGroup
+            Resource: 
+              - arn:aws:logs:us-west-2:560466782437:*
+          - Sid: AllowLogStream
+            Effect: Allow
+            Action: 
+              - logs:CreateLogStream
+              - logs:PutLogEvents
+            Resource:
+              - arn:aws:logs:us-west-2:560466782437:log-group:/aws/lambda/InvokeBedrock:*
+      CodeUri: ./src/bedrock-invoke
+      Description: A starter AWS Lambda function.
+      MemorySize: 512
+      Timeout: 15
