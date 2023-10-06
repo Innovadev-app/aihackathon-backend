@@ -26,7 +26,11 @@
         run: |
           wget https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip
           unzip aws-sam-cli-linux-x86_64.zip -d sam-installation
-      - name: sam test
+      - name: sam build
         shell: bash
         run: |
-          sam --version
+          sam build
+      - name: sam build
+        shell: bash
+        run: |
+          sam deploy
