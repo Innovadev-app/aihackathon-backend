@@ -7,7 +7,7 @@ Resources:
     Properties:
       Name: 'Timothy-Backend-API'
       StageName: prod
-  
+
   bedrockinvoke:
     Type: 'AWS::Serverless::Function'
     Properties:
@@ -54,28 +54,28 @@ Resources:
   timothychat:
     Type: 'AWS::Serverless::Function'
     Properties:
-      Architectures: 
+      Architectures:
         - arm64
       Handler: timothy-chat.lambda_handler
       Runtime: python3.11
-      Layers: 
+      Layers:
         - arn:aws:lambda:us-west-2:378530652592:layer:boto3-mylayer:1
-      Policies: 
-        - Statement: 
+      Policies:
+        - Statement:
           - Sid: S3Policy
             Effect: Allow
             Action: s3:*
-            Resource: 
+            Resource:
               - arn:aws:s3:::timothy-aihackathon-data
               - arn:aws:s3:::timothy-aihackathon-data/*
           - Sid: AllowLogs
             Effect: Allow
             Action: logs:CreateLogGroup
-            Resource: 
+            Resource:
               - arn:aws:logs:us-west-2:560466782437:*
           - Sid: AllowLogStream
             Effect: Allow
-            Action: 
+            Action:
               - logs:CreateLogStream
               - logs:PutLogEvents
             Resource:
@@ -212,7 +212,7 @@ Resources:
     Properties:
       Description: Timothy Kendra Index
       Edition: DEVELOPER_EDITION
-      Name: Timothy-Sermon-Index
+      Name: Timothy-Index
       RoleArn: !GetAtt KendraIAMRole.Arn
 
   kendraS3SermonDataSource:
@@ -237,6 +237,7 @@ Resources:
   rWSKendraIndexRole:
     Type: 'AWS::IAM::Role'
     Properties:
+      RoleName: 'WSKendraIndex'
       AssumeRolePolicyDocument:
         Version: 2012-10-17
         Statement:
@@ -246,7 +247,8 @@ Resources:
               Service: kendra.amazonaws.com
             Action: 'sts:AssumeRole'
       Policies:
-        - PolicyDocument:
+        - PolicyName: 'TimothyAiWsPolicy'
+          PolicyDocument:
             Version: 2012-10-17
             Statement:
               - Effect: Allow
@@ -268,16 +270,6 @@ Resources:
                   - 'logs:DescribeLogStreams'
                   - 'logs:CreateLogStream'
                   - 'logs:PutLogEvents'
-          PolicyName: 'TimothyAiWsPolicy'
-      RoleName: 'WSKendraIndex'
-
-  ## Web Crawler Kendra Index
-  rWsKendraIndex:
-    Type: 'AWS::Kendra::Index'
-    Properties:
-      Name: !Sub "Timothy-WS-Index"
-      Edition: DEVELOPER_EDITION
-      RoleArn: !GetAtt rWSKendraIndexRole.Arn
 
   ##DS Web Crawler Role
   rWebCrawlerKendraDsWsRole:
@@ -297,7 +289,7 @@ Resources:
             Version: 2012-10-17
             Statement:
               - Effect: Allow
-                Resource: !Sub 'arn:aws:kendra:${AWS::Region}:${AWS::AccountId}:index/${rWsKendraIndex.Id}'
+                Resource: !Sub 'arn:aws:kendra:${AWS::Region}:${AWS::AccountId}:index/${kendraIndex.Id}'
                 Action:
                   - 'kendra:BatchPutDocument'
                   - 'kendra:BatchDeleteDocument'
@@ -314,7 +306,11 @@ Resources:
               SeedUrls:
                 - "https://bcponline.org/"
               WebCrawlerMode: "HOST_ONLY"
-      IndexId: !GetAtt rWsKendraIndex.Id
+            SiteMapsConfiguration:
+                 SiteMaps:
+                      - "https://bcponline.org/sitemap.xml"
+
+      IndexId: !GetAtt kendraIndex.Id
       Name: 'KendraDocsDS'
       RoleArn: !GetAtt rWebCrawlerKendraDsWsRole.Arn
       Type: 'WEBCRAWLER'
