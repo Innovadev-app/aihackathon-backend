@@ -34,7 +34,7 @@
         shell: bash
         run: |
           sam build
-      - name: sam build
+      - name: sam deploy
         shell: bash
         run: |
           sam deploy
