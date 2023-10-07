@@ -107,9 +107,9 @@ Resources:
   kendraS3SermonDataSource:
     Type: AWS::Kendra::DataSource
     Properties:
-      Description: DataSource
+      Description: Timothy Sermons Amazon S3 Data Source
       IndexId: !GetAtt kendraIndex.Id
-      Name: Timothy Sermons Amazon S3 Data Source
+      Name: Timothy-Sermons-Amazon-S3-Data-Source
       RoleArn: !GetAtt KendraIAMRole.Arn
       Type: S3
       DataSourceConfiguration: 
