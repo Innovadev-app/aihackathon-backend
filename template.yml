@@ -67,6 +67,7 @@ Resources:
             Action: s3:*
             Resource: 
               - arn:aws:s3:::timothy-aihackathon-data
+              - arn:aws:s3:::timothy-aihackathon-data/*
           - Sid: AllowLogs
             Effect: Allow
             Action: logs:CreateLogGroup
@@ -83,6 +84,14 @@ Resources:
       Description: Parse Timothy Chat
       MemorySize: 512
       Timeout: 30
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /timothy-chat
+            Method: post
+            RestApiId:
+              Ref: timothyBackendAPI
 
   kendrasearch:
     Type: 'AWS::Serverless::Function'

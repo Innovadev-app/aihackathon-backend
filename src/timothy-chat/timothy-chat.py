@@ -16,7 +16,21 @@ def lambda_handler(event, context):
 
     # Create S3 client and build request body.
     s3 = boto3.client(service_name="s3")
-    bucket = "timothy-aihackathon-data"
+
+    # Set the region where your S3 bucket is located
+    # s3.meta.region_name = "us-east-2"
+
+    # Set the name of your S3 bucket and object
+    bucket_name = "timothy-aihackathon-data"
+    object_key = "json-questions/questions.json"
+
+    # Get the S3 object
+    obj = s3.get_object(Bucket=bucket_name, Key=object_key)
+
+    # Load the S3 object into a JSON object
+    json_object = json.loads(obj.get()["Body"].read())
+
+    print(json.dumps(json_object))
 
     # If prompt is empty, return with an error
     if len(prompt) == 0:
