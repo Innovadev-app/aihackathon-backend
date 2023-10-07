@@ -117,4 +117,4 @@ Resources:
           BucketName: !Ref dataBucket
           InclusionPrefixes: 
             - /pdf-sermons/*
-      Schedule: DAILY
+      Schedule: 0 0 * * *
