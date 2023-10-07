@@ -354,12 +354,6 @@ Resources:
         - 
           AttributeName: "ProfileID"
           AttributeType: "S"
-        - 
-          AttributeName: "QuestionID"
-          AttributeType: "S"
-        - 
-          AttributeName: "Recommendation"
-          AttributeType: "S"
       KeySchema: 
         - 
           AttributeName: "Classification"
