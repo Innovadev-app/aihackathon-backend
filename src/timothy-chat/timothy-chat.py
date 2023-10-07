@@ -76,11 +76,8 @@ def lambda_handler(event, context):
     print(json.dumps(event["body"]))
 
     # Get prompt text string from event
-    # print("Decoded Body")
     requestBody = urllib.parse.unquote(event["body"])
-    # print(requestBody)
     answers = requestBody.split("&")
-    # print(json.dumps(answers))
 
     # Create S3 client and build request body.
     s3 = boto3.client(service_name="s3")
@@ -96,10 +93,12 @@ def lambda_handler(event, context):
     file_content = obj["Body"].read().decode("utf-8")
     json_content = json.loads(file_content)
     prompts = json_content["Prompts"]
-    # print(json.dumps(prompts))
+
+    # If prompt is empty, return with an error
+    if len(prompts) == 0:
+        return {"statusCode": 200, "body": "Please enter your question and try again"}
 
     for answer in answers:
-        # print(answer)
         quest = answer.split("=")[0].upper()
         ans = answer.split("=")[1]
         # print(quest)
@@ -135,10 +134,6 @@ def lambda_handler(event, context):
                 print("Search Kendra for Sermon: " + prompt[ref]["Prompt"])
                 kendraResponse = kendraSearch(prompt[ref]["Prompt"])
                 print(kendraResponse)
-
-    # If prompt is empty, return with an error
-    if len(prompts) == 0:
-        return {"statusCode": 200, "body": "Please enter your question and try again"}
 
     # Return anser to user.
     answer = "End Test"
