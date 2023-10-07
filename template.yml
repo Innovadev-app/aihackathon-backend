@@ -296,9 +296,14 @@ Resources:
           PolicyName: !Sub '${AWS::StackName}-WsDocsDsPolicy'
 
   # Web Crawler Data Crawler
-  rWebCrawlerKendraDocsDS:
+  rWebCrawlerKendraDS:
     Type: 'AWS::Kendra::DataSource'
     Properties:
+      IndexId: !GetAtt kendraIndex.Id
+      Name: 'KendraDocsDS'
+      RoleArn: !GetAtt rWebCrawlerKendraDsWsRole.Arn
+      Type: 'WEBCRAWLER'
+      Schedule: cron(0 12 * * ? *)
       DataSourceConfiguration:
         WebCrawlerConfiguration:
           Urls:
@@ -310,8 +315,3 @@ Resources:
                  SiteMaps:
                       - "https://bcponline.org/sitemap.xml"
 
-      IndexId: !GetAtt kendraIndex.Id
-      Name: 'KendraDocsDS'
-      RoleArn: !GetAtt rWebCrawlerKendraDsWsRole.Arn
-      Type: 'WEBCRAWLER'
-      Schedule: cron(0 12 * * ? *)
