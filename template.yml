@@ -7,33 +7,33 @@ Resources:
     Properties:
       Name: 'Timothy-Backend-API'
       StageName: prod
-  
+
   bedrockinvoke:
     Type: 'AWS::Serverless::Function'
     Properties:
-      Architectures: 
+      Architectures:
         - arm64
       Handler: bedrock-invoke.lambda_handler
       Runtime: python3.11
-      Layers: 
+      Layers:
         - arn:aws:lambda:us-west-2:378530652592:layer:boto3-mylayer:1
-      Policies: 
-        - Statement: 
+      Policies:
+        - Statement:
           - Sid: BedRockPolicy
             Effect: Allow
             Action: bedrock:InvokeModel
-            Resource: 
+            Resource:
               - arn:aws:bedrock:*:560466782437:provisioned-model/*
               - arn:aws:bedrock:*::foundation-model/*
               - arn:aws:bedrock:*:560466782437:custom-model/*
           - Sid: AllowLogs
             Effect: Allow
             Action: logs:CreateLogGroup
-            Resource: 
+            Resource:
               - arn:aws:logs:us-west-2:560466782437:*
           - Sid: AllowLogStream
             Effect: Allow
-            Action: 
+            Action:
               - logs:CreateLogStream
               - logs:PutLogEvents
             Resource:
@@ -54,28 +54,28 @@ Resources:
   timothychat:
     Type: 'AWS::Serverless::Function'
     Properties:
-      Architectures: 
+      Architectures:
         - arm64
       Handler: timothy-chat.lambda_handler
       Runtime: python3.11
-      Layers: 
+      Layers:
         - arn:aws:lambda:us-west-2:378530652592:layer:boto3-mylayer:1
-      Policies: 
-        - Statement: 
+      Policies:
+        - Statement:
           - Sid: S3Policy
             Effect: Allow
             Action: s3:*
-            Resource: 
+            Resource:
               - arn:aws:s3:::timothy-aihackathon-data
               - arn:aws:s3:::timothy-aihackathon-data/*
           - Sid: AllowLogs
             Effect: Allow
             Action: logs:CreateLogGroup
-            Resource: 
+            Resource:
               - arn:aws:logs:us-west-2:560466782437:*
           - Sid: AllowLogStream
             Effect: Allow
-            Action: 
+            Action:
               - logs:CreateLogStream
               - logs:PutLogEvents
             Resource:
@@ -96,17 +96,17 @@ Resources:
   kendrasearch:
     Type: 'AWS::Serverless::Function'
     Properties:
-      Architectures: 
+      Architectures:
         - arm64
       Handler: kendra-search.lambda_handler
       Runtime: python3.11
-      Layers: 
+      Layers:
         - arn:aws:lambda:us-west-2:378530652592:layer:boto3-mylayer:1
-      Policies: 
-        - Statement: 
+      Policies:
+        - Statement:
           - Sid: KendraSearchPolicy
             Effect: Allow
-            Action: 
+            Action:
               - kendra:Query
               - kendra:GetQuerySuggestions
               - kendra:DescribeIndex
@@ -119,30 +119,30 @@ Resources:
               - kendra:ListDataSourceSyncJobs
               - kendra:DescribeQuerySuggestionsBlockList
               - kendra:DescribeExperience
-            Resource: 
+            Resource:
               - arn:aws:kendra:*:378530652592:index/*
           - Sid: AllowListIndices
             Effect: Allow
             Action: kendra:ListIndices
-            Resource: 
+            Resource:
               - '*'
           - Sid: AllowLogStream
             Effect: Allow
-            Action: 
+            Action:
               - logs:CreateLogStream
               - logs:PutLogEvents
             Resource:
               - arn:aws:logs:us-west-2:560466782437:log-group:/aws/lambda/kendrasearch:*
           - Sid: KendraDescribe
             Effect: Allow
-            Action: 
+            Action:
               - kendra:DescribeDataSource
               - kendra:DescribeThesaurus
               - kendra:DescribeFaq
               - kendra:ListDataSourceSyncJobs
               - kendra:DescribeQuerySuggestionsBlockList
               - kendra:DescribeExperience
-            Resource: 
+            Resource:
               - arn:aws:kendra:*:378530652592:index/*/thesaurus/*
               - arn:aws:kendra:*:378530652592:index/*/data-source/*
               - arn:aws:kendra:*:378530652592:index/*/query-suggestions-block-list/*
@@ -169,9 +169,9 @@ Resources:
 
   KendraIAMRole:
     Type: AWS::IAM::Role
-    Properties: 
+    Properties:
       Description: Kendra Index IAM Role
-      AssumeRolePolicyDocument: 
+      AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
           - Effect: Allow
@@ -191,7 +191,7 @@ Resources:
               - Effect: Allow
                 Action: 'cloudwatch:PutMetricData'
                 Resource: '*'
-                Condition: 
+                Condition:
                   StringEquals:
                     "cloudwatch:namespace": "AWS/Kendra"
               - Effect: Allow
@@ -201,7 +201,7 @@ Resources:
                 Action: 'logs:CreateLogGroup'
                 Resource: !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/kendra/*'
               - Effect: Allow
-                Action: 
+                Action:
                   - 'logs:DescribeLogStreams'
                   - 'logs:CreateLogStream'
                   - 'logs:PutLogEvents'
@@ -209,12 +209,12 @@ Resources:
 
   kendraIndex:
     Type: AWS::Kendra::Index
-    Properties: 
+    Properties:
       Description: Timothy Kendra Index
       Edition: DEVELOPER_EDITION
-      Name: Timothy-Sermon-Index
+      Name: Timothy-Index
       RoleArn: !GetAtt KendraIAMRole.Arn
-  
+
   kendraS3SermonDataSource:
     Type: AWS::Kendra::DataSource
     Properties:
@@ -223,9 +223,94 @@ Resources:
       Name: Timothy-Sermons-Amazon-S3-Data-Source
       RoleArn: !GetAtt KendraIAMRole.Arn
       Type: S3
-      DataSourceConfiguration: 
-        S3Configuration: 
+      DataSourceConfiguration:
+        S3Configuration:
           BucketName: !Ref dataBucket
-          InclusionPrefixes: 
+          InclusionPrefixes:
             - pdf-sermons/
       Schedule: cron(0 12 * * ? *)
+
+  ###############################
+  ###### WEB CRAWLER
+  ###############################
+  ##Kendra Index Role
+  rWSKendraIndexRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: 'WSKendraIndex'
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Sid: ''
+            Effect: Allow
+            Principal:
+              Service: kendra.amazonaws.com
+            Action: 'sts:AssumeRole'
+      Policies:
+        - PolicyName: 'TimothyAiWsPolicy'
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Resource: '*'
+                Condition:
+                  StringEquals:
+                    'cloudwatch:namespace': 'Kendra'
+                Action:
+                  - 'cloudwatch:PutMetricData'
+              - Effect: Allow
+                Resource: '*'
+                Action: 'logs:DescribeLogGroups'
+              - Effect: Allow
+                Resource: !Sub 'arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/kendra/*'
+                Action: 'logs:CreateLogGroup'
+              - Effect: Allow
+                Resource: !Sub 'arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/kendra/*:log-stream:*'
+                Action:
+                  - 'logs:DescribeLogStreams'
+                  - 'logs:CreateLogStream'
+                  - 'logs:PutLogEvents'
+
+  ##DS Web Crawler Role
+  rWebCrawlerKendraDsWsRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: 'TimothyAiDsWsRole'
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Sid: 'timothyaids'
+            Effect: Allow
+            Principal:
+              Service: kendra.amazonaws.com
+            Action: 'sts:AssumeRole'
+      Policies:
+        - PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Resource: !Sub 'arn:aws:kendra:${AWS::Region}:${AWS::AccountId}:index/${kendraIndex.Id}'
+                Action:
+                  - 'kendra:BatchPutDocument'
+                  - 'kendra:BatchDeleteDocument'
+          PolicyName: !Sub '${AWS::StackName}-WsDocsDsPolicy'
+
+  # Web Crawler Data Crawler
+  rWebCrawlerKendraDS:
+    Type: 'AWS::Kendra::DataSource'
+    Properties:
+      IndexId: !GetAtt kendraIndex.Id
+      Name: 'KendraDocsDS'
+      RoleArn: !GetAtt rWebCrawlerKendraDsWsRole.Arn
+      Type: 'WEBCRAWLER'
+      Schedule: cron(0 12 * * ? *)
+      DataSourceConfiguration:
+        WebCrawlerConfiguration:
+          Urls:
+          #   SeedUrlConfiguration:
+          #     SeedUrls:
+          #       - "https://bcponline.org/"
+              # WebCrawlerMode: "HOST_ONLY"
+            SiteMapsConfiguration:
+                 SiteMaps:
+                      - "https://bcponline.org/sitemap.xml"
