@@ -36,3 +36,9 @@ Resources:
       Description: A starter AWS Lambda function.
       MemorySize: 512
       Timeout: 15
+
+      dataBucket:
+        Type: 'AWS::S3::Bucket'
+        DeletionPolicy: Retain
+        Properties:
+          BucketName: timothy-aihackathon-data
