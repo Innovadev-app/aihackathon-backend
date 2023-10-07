@@ -102,4 +102,4 @@ Resources:
       Description: Timothy Kendra Index
       Edition: DEVELOPER_EDITION
       Name: Timothy Kendra Index
-      RoleArn: !Ref KendraIAMRole
+      RoleArn: !GetAtt KendraIAMRole.Arn
