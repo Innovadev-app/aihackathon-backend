@@ -133,6 +133,22 @@ Resources:
         - arn:aws:lambda:us-west-2:378530652592:layer:boto3-mylayer:1
       Policies:
         - Statement:
+          - Sid: DynamoDBAccess
+            Effect: Allow
+            Action:
+              - dynamodb:BatchGetItem
+              - dynamodb:DescribeTable
+              - dynamodb:GetItem
+              - dynamodb:Scan
+              - dynamodb:Query
+              - dynamodb:GetRecords
+            Resource: !GetAtt rRecommendationsTable.arn
+          - Sid: DynamoDB List
+            Effect: Allow
+            Action:
+              - dynamodb:ListTables
+            Resource: 
+              - '*'
           - Sid: S3Policy
             Effect: Allow
             Action: s3:*
@@ -150,22 +166,6 @@ Resources:
               - logs:CreateLogStream
               - logs:PutLogEvents
             Resource: arn:aws:logs:us-west-2:560466782437:log-group:/aws/lambda/timothychat:*
-          - Sid: DynamoDBAccess
-            Effect: Allow
-            Action:
-              - dynamodb:BatchGetItem
-              - dynamodb:DescribeTable
-              - dynamodb:GetItem
-              - dynamodb:Scan
-              - dynamodb:Query
-              - dynamodb:GetRecords
-            Resource: !GetAtt rRecommendationsTable.arn
-            - Sid: DynamoDB List
-              Effect: Allow
-              Action:
-                - dynamodb:ListTables
-              Resource: 
-                - '*'
       CodeUri: ./src/recommendations
       Description: Get Timothy Recommendations
       MemorySize: 512
