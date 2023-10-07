@@ -307,10 +307,10 @@ Resources:
       DataSourceConfiguration:
         WebCrawlerConfiguration:
           Urls:
-            SeedUrlConfiguration:
-              SeedUrls:
-                - "https://bcponline.org/"
-              WebCrawlerMode: "HOST_ONLY"
+          #   SeedUrlConfiguration:
+          #     SeedUrls:
+          #       - "https://bcponline.org/"
+              # WebCrawlerMode: "HOST_ONLY"
             SiteMapsConfiguration:
                  SiteMaps:
                       - "https://bcponline.org/sitemap.xml"
