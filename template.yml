@@ -103,3 +103,18 @@ Resources:
       Edition: DEVELOPER_EDITION
       Name: Timothy-Kendra-Index
       RoleArn: !GetAtt KendraIAMRole.Arn
+  
+  kendraS3SermonDataSource:
+    Type: AWS::Kendra::DataSource
+      Properties:
+        Description: DataSource
+        IndexId: !GetAtt kendraIndex.Id
+        Name: Timothy Sermons Amazon S3 Data Source
+        RoleArn: !GetAtt KendraIAMRole.Arn
+        Type: S3
+        DataSourceConfiguration: 
+          S3Configuration: 
+            BucketName: !Ref dataBucket
+            InclusionPrefixes: 
+              - /pdf-sermons/*
+        Schedule: DAILY
