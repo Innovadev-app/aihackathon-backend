@@ -117,4 +117,4 @@ Resources:
           BucketName: !Ref dataBucket
           InclusionPrefixes: 
             - /pdf-sermons/*
-      Schedule: cron(0 0 * * *)
+      Schedule: cron(0 12 * * ? *)
