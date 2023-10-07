@@ -55,3 +55,53 @@ Resources:
     DeletionPolicy: Retain
     Properties:
       BucketName: timothy-aihackathon-data
+
+  KendraIAMRole:
+    Type: AWS::IAM::Role
+    Properties: 
+      Description: Kendra Index IAM Role
+      AssumeRolePolicyDocument: 
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - kendra.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Path: /
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AdministratorAccess
+      Policies:
+        - PolicyName: root
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: 'cloudwatch:PutMetricData'
+                Resource: '*'
+                Condition: 
+                  StringEquals:
+                    "cloudwatch:namespace": "AWS/Kendra"
+              - Effect: Allow
+                Action: 'logs:DescribeLogGroups'
+                Resource: '*'
+              - Effect: Allow
+                Action: 'logs:CreateLogGroup'
+                Resource: '*'
+                !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/kendra/*'
+              - Effect: Allow
+                Action: 
+                  - 'logs:DescribeLogStreams'
+                  - 'logs:CreateLogStream'
+                  - 'logs:PutLogEvents'
+                Resource: '*'
+                !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/kendra/*:log-stream:*'
+
+  kendraIndex:
+    Type: AWS::Kendra::Index
+    Properties: 
+      Description: Timothy Kendra Index
+      Edition: DEVELOPER_EDITION
+      Name: Timothy Kendra Index
+      RoleArn: !Ref KendraIAMRole
