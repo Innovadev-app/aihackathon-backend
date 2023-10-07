@@ -1,9 +1,9 @@
 ---
-  name: serverless
+  name: serverless deploy
   on:
     push:
       branches:
-        - cicd
+        - main
 
   jobs:
     deploy-lambda:
