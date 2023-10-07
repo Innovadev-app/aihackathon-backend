@@ -184,5 +184,5 @@ Resources:
         S3Configuration: 
           BucketName: !Ref dataBucket
           InclusionPrefixes: 
-            - pdf-sermons/**.pdf
+            - pdf-sermons/
       Schedule: cron(0 12 * * ? *)
