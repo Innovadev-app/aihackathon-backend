@@ -5,5 +5,5 @@ resolve_s3 = true
 s3_prefix = "aihackathon-backend"
 region = "us-west-2"
 confirm_changeset = false
-capabilities = "CAPABILITY_IAM"
+capabilities = ["CAPABILITY_IAM", "CAPABILITY_NAMED_IAM"]
 image_repositories = []
