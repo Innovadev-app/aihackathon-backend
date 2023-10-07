@@ -3,6 +3,7 @@ import boto3
 
 
 def lambda_handler(event, context):
+    print(json.dumps(event))
     # Get prompt text string from event
     prompt = "I am a Christian and I am feeling guilty about my sins this morning.  What does the ESV bible say about how I seek God's forgiveness?"
     # prompt = event[""];
