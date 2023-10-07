@@ -1,12 +1,18 @@
 import json
 import boto3
+import urllib.parse
 
 
 def lambda_handler(event, context):
-    print(json.dumps(event))
+    print("Event Body:")
+    print(json.dumps(event["body"]))
+
     # Get prompt text string from event
-    prompt = "I am a Christian and I am feeling guilty about my sins this morning.  What does the ESV bible say about how I seek God's forgiveness?"
-    # prompt = event[""];
+    print("Decoded Body")
+    requestBody = urllib.parse.unquote(event["body"])
+    print(requestBody)
+    prompt = requestBody.replace("prompt=", "")
+    print(prompt)
 
     # If prompt is empty, return with an error
     if len(prompt) == 0:
