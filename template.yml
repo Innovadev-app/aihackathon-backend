@@ -112,7 +112,7 @@ Resources:
       CodeUri: ./src/timothy-chat
       Description: Parse Timothy Chat
       MemorySize: 512
-      Timeout: 30
+      Timeout: 120
       Events:
         ApiEvent:
           Type: Api
@@ -343,3 +343,31 @@ Resources:
             SiteMapsConfiguration:
                  SiteMaps:
                       - "https://bcponline.org/sitemap.xml"
+
+  rRecommendationsTable:
+    Type: AWS::DynamoDB::Table
+    Properties: 
+      AttributeDefinitions: 
+        - 
+          AttributeName: "Classification"
+          AttributeType: "S"
+        - 
+          AttributeName: "ProfileID"
+          AttributeType: "S"
+        - 
+          AttributeName: "QuestionID"
+          AttributeType: "S"
+        - 
+          AttributeName: "Recommendation"
+          AttributeType: "S"
+      KeySchema: 
+        - 
+          AttributeName: "Classification"
+          KeyType: "HASH"
+        - 
+          AttributeName: "ProfileID"
+          KeyType: "RANGE"
+      ProvisionedThroughput: 
+        ReadCapacityUnits: "5"
+        WriteCapacityUnits: "5"
+      TableName: "TimothyRecommendationsTable"
