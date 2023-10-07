@@ -149,8 +149,7 @@ Resources:
             Action:
               - logs:CreateLogStream
               - logs:PutLogEvents
-            Resource:
-              - arn:aws:logs:us-west-2:560466782437:log-group:/aws/lambda/timothychat:*
+            Resource: arn:aws:logs:us-west-2:560466782437:log-group:/aws/lambda/timothychat:*
           - Sid: DynamoDBAccess
             Effect: Allow
             Action: 
