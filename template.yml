@@ -2,6 +2,11 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: 'AWS::Serverless-2016-10-31'
 Description: A starter AWS Lambda function.
 Resources:
+  timothyBackendAPI:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: 'Timothy-Backend-API'
+      StageName: prod
   bedrockinvoke:
     Type: 'AWS::Serverless::Function'
     Properties:
@@ -35,7 +40,15 @@ Resources:
       CodeUri: ./src/bedrock-invoke
       Description: A starter AWS Lambda function.
       MemorySize: 512
-      Timeout: 15
+      Timeout: 30
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /bedrock
+            Method: get
+            RestApiId:
+              Ref: timothyBackendAPI
 
   dataBucket:
     Type: 'AWS::S3::Bucket'
