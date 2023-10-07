@@ -80,6 +80,35 @@ Resources:
               - logs:PutLogEvents
             Resource:
               - arn:aws:logs:us-west-2:560466782437:log-group:/aws/lambda/timothychat:*
+          - Sid: KendraSearchPolicy
+            Effect: Allow
+            Action:
+              - kendra:Query
+              - kendra:GetQuerySuggestions
+              - kendra:DescribeIndex
+              - kendra:Retrieve
+              - kendra:ListFaqs
+              - kendra:DescribeDataSource
+              - kendra:ListDataSources
+              - kendra:DescribeThesaurus
+              - kendra:DescribeFaq
+              - kendra:ListDataSourceSyncJobs
+              - kendra:DescribeQuerySuggestionsBlockList
+              - kendra:DescribeExperience
+            Resource:
+              - arn:aws:kendra:*:378530652592:index/*
+          - Sid: AllowListIndices
+            Effect: Allow
+            Action: kendra:ListIndices
+            Resource:
+              - '*'
+          - Sid: BedRockPolicy
+            Effect: Allow
+            Action: bedrock:InvokeModel
+            Resource:
+              - arn:aws:bedrock:*:560466782437:provisioned-model/*
+              - arn:aws:bedrock:*::foundation-model/*
+              - arn:aws:bedrock:*:560466782437:custom-model/*
       CodeUri: ./src/timothy-chat
       Description: Parse Timothy Chat
       MemorySize: 512
