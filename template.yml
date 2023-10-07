@@ -94,8 +94,7 @@ Resources:
                   - 'logs:DescribeLogStreams'
                   - 'logs:CreateLogStream'
                   - 'logs:PutLogEvents'
-                Resource: '*'
-                !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/kendra/*:log-stream:*'
+                Resource: !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/kendra/*:log-stream:*'
 
   kendraIndex:
     Type: AWS::Kendra::Index
