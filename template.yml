@@ -37,7 +37,7 @@ Resources:
       MemorySize: 512
       Timeout: 15
 
-      dataBucket:
+      S3Bucket:
         Type: 'AWS::S3::Bucket'
         DeletionPolicy: Retain
         Properties:
