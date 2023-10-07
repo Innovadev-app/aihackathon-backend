@@ -88,8 +88,8 @@ Resources:
                 Resource: '*'
               - Effect: Allow
                 Action: 'logs:CreateLogGroup'
-                Resource: '*'
-                !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/kendra/*'
+                Resource: 
+                  - !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/kendra/*'
               - Effect: Allow
                 Action: 
                   - 'logs:DescribeLogStreams'
