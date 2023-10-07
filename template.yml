@@ -142,7 +142,7 @@ Resources:
               - dynamodb:Scan
               - dynamodb:Query
               - dynamodb:GetRecords
-            Resource: !GetAtt rRecommendationsTable.arn
+            Resource: !GetAtt rRecommendationsTable.Arn
           - Sid: DynamoDB List
             Effect: Allow
             Action:
