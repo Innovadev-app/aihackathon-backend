@@ -1,0 +1,105 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: A starter AWS Lambda function.
+Resources:
+  timothyBackendAPI:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: 'Timothy-Backend-API'
+      StageName: prod
+  bedrockinvoke:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Architectures: 
+        - arm64
+      Handler: bedrock-invoke.lambda_handler
+      Runtime: python3.11
+      Layers: 
+        - arn:aws:lambda:us-west-2:378530652592:layer:boto3-mylayer:1
+      Policies: 
+        - Statement: 
+          - Sid: BedRockPolicy
+            Effect: Allow
+            Action: bedrock:InvokeModel
+            Resource: 
+              - arn:aws:bedrock:*:560466782437:provisioned-model/*
+              - arn:aws:bedrock:*::foundation-model/*
+              - arn:aws:bedrock:*:560466782437:custom-model/*
+          - Sid: AllowLogs
+            Effect: Allow
+            Action: logs:CreateLogGroup
+            Resource: 
+              - arn:aws:logs:us-west-2:560466782437:*
+          - Sid: AllowLogStream
+            Effect: Allow
+            Action: 
+              - logs:CreateLogStream
+              - logs:PutLogEvents
+            Resource:
+              - arn:aws:logs:us-west-2:560466782437:log-group:/aws/lambda/InvokeBedrock:*
+      CodeUri: ./src/bedrock-invoke
+      Description: A starter AWS Lambda function.
+      MemorySize: 512
+      Timeout: 30
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /bedrock
+            Method: post
+            RestApiId:
+              Ref: timothyBackendAPI
+
+  dataBucket:
+    Type: 'AWS::S3::Bucket'
+    DeletionPolicy: Retain
+    Properties:
+      BucketName: timothy-aihackathon-data
+
+  KendraIAMRole:
+    Type: AWS::IAM::Role
+    Properties: 
+      Description: Kendra Index IAM Role
+      AssumeRolePolicyDocument: 
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - kendra.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Path: /
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AdministratorAccess
+      Policies:
+        - PolicyName: root
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: 'cloudwatch:PutMetricData'
+                Resource: '*'
+                Condition: 
+                  StringEquals:
+                    "cloudwatch:namespace": "AWS/Kendra"
+              - Effect: Allow
+                Action: 'logs:DescribeLogGroups'
+                Resource: '*'
+              - Effect: Allow
+                Action: 'logs:CreateLogGroup'
+                Resource: !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/kendra/*'
+              - Effect: Allow
+                Action: 
+                  - 'logs:DescribeLogStreams'
+                  - 'logs:CreateLogStream'
+                  - 'logs:PutLogEvents'
+                Resource: !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/kendra/*:log-stream:*'
+
+  kendraIndex:
+    Type: AWS::Kendra::Index
+    Properties: 
+      Description: Timothy Kendra Index
+      Edition: DEVELOPER_EDITION
+      Name: Timothy Kendra Index
+      RoleArn: !Ref KendraIAMRole
