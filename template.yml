@@ -38,7 +38,7 @@ Resources:
             Resource:
               - arn:aws:logs:us-west-2:560466782437:log-group:/aws/lambda/InvokeBedrock:*
       CodeUri: ./src/bedrock-invoke
-      Description: A starter AWS Lambda function.
+      Description: Bedrock invoke Lambda Function
       MemorySize: 512
       Timeout: 30
       Events:
@@ -46,6 +46,74 @@ Resources:
           Type: Api
           Properties:
             Path: /bedrock
+            Method: post
+            RestApiId:
+              Ref: timothyBackendAPI
+
+  kendrasearch:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Architectures: 
+        - arm64
+      Handler: kendra-search.lambda_handler
+      Runtime: python3.11
+      Layers: 
+        - arn:aws:lambda:us-west-2:378530652592:layer:boto3-mylayer:1
+      Policies: 
+        - Statement: 
+          - Sid: KendraSearchPolicy
+            Effect: Allow
+            Action: 
+              - kendra:Query
+              - kendra:GetQuerySuggestions
+              - kendra:DescribeIndex
+              - kendra:Retrieve
+              - kendra:ListFaqs
+              - kendra:DescribeDataSource
+              - kendra:ListDataSources
+              - kendra:DescribeThesaurus
+              - kendra:DescribeFaq
+              - kendra:ListDataSourceSyncJobs
+              - kendra:DescribeQuerySuggestionsBlockList
+              - kendra:DescribeExperience
+            Resource: 
+              - arn:aws:kendra:*:378530652592:index/*
+          - Sid: AllowListIndices
+            Effect: Allow
+            Action: kendra:ListIndices
+            Resource: 
+              - '*'
+          - Sid: AllowLogStream
+            Effect: Allow
+            Action: 
+              - logs:CreateLogStream
+              - logs:PutLogEvents
+            Resource:
+              - arn:aws:logs:us-west-2:560466782437:log-group:/aws/lambda/InvokeBedrock:*
+          - Sid: KendraDescribe
+            Effect: Allow
+            Action: 
+              - kendra:DescribeDataSource
+              - kendra:DescribeThesaurus
+              - kendra:DescribeFaq
+              - kendra:ListDataSourceSyncJobs
+              - kendra:DescribeQuerySuggestionsBlockList
+              - kendra:DescribeExperience
+            Resource: 
+              - arn:aws:kendra:*:378530652592:index/*/thesaurus/*
+              - arn:aws:kendra:*:378530652592:index/*/data-source/*
+              - arn:aws:kendra:*:378530652592:index/*/query-suggestions-block-list/*
+              - arn:aws:kendra:*:378530652592:index/*/faq/*
+              - arn:aws:kendra:*:378530652592:index/*/experience/*
+      CodeUri: ./src/kendra-search
+      Description: Kendra Search Lambda Function
+      MemorySize: 512
+      Timeout: 30
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /kendra
             Method: post
             RestApiId:
               Ref: timothyBackendAPI
@@ -101,7 +169,7 @@ Resources:
     Properties: 
       Description: Timothy Kendra Index
       Edition: DEVELOPER_EDITION
-      Name: Timothy-Kendra-Index
+      Name: Timothy-Sermon-Index
       RoleArn: !GetAtt KendraIAMRole.Arn
   
   kendraS3SermonDataSource:
@@ -116,5 +184,5 @@ Resources:
         S3Configuration: 
           BucketName: !Ref dataBucket
           InclusionPrefixes: 
-            - /pdf-sermons/*
+            - pdf-sermons/**.pdf
       Schedule: cron(0 12 * * ? *)
