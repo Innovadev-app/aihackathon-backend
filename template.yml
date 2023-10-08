@@ -127,7 +127,7 @@ Resources:
     Properties:
       Architectures:
         - arm64
-      Handler: timothy-chat.lambda_handler
+      Handler: recommendations.lambda_handler
       Runtime: python3.11
       Layers:
         - arn:aws:lambda:us-west-2:378530652592:layer:boto3-mylayer:1
@@ -406,17 +406,17 @@ Resources:
     Properties: 
       AttributeDefinitions: 
         - 
-          AttributeName: "Classification"
+          AttributeName: "ProfileID"
           AttributeType: "S"
         - 
-          AttributeName: "ProfileID"
+          AttributeName: "QuestionID"
           AttributeType: "S"
       KeySchema: 
         - 
-          AttributeName: "Classification"
+          AttributeName: "ProfileID"
           KeyType: "HASH"
         - 
-          AttributeName: "ProfileID"
+          AttributeName: "QuestionID"
           KeyType: "RANGE"
       ProvisionedThroughput: 
         ReadCapacityUnits: "5"
