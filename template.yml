@@ -142,7 +142,7 @@ Resources:
               - dynamodb:Scan
               - dynamodb:Query
               - dynamodb:GetRecords
-            Resource: !GetAtt rRecommendationsTable.Arn
+            Resource: !GetAtt RecommendationTable.Arn
           - Sid: DynamoDBList
             Effect: Allow
             Action:
@@ -406,14 +406,36 @@ Resources:
     Properties: 
       AttributeDefinitions: 
         - 
+          AttributeName: "Classification"
+          AttributeType: "S"
+        - 
           AttributeName: "ProfileID"
+          AttributeType: "S"
+      KeySchema: 
+        - 
+          AttributeName: "Classification"
+          KeyType: "HASH"
+        - 
+          AttributeName: "ProfileID"
+          KeyType: "RANGE"
+      ProvisionedThroughput: 
+        ReadCapacityUnits: "5"
+        WriteCapacityUnits: "5"
+      TableName: "TimothyRecommendationsTable"
+
+  RecommendationTable:
+    Type: AWS::DynamoDB::Table
+    Properties: 
+      AttributeDefinitions: 
+        - 
+          AttributeName: "Classification"
           AttributeType: "S"
         - 
           AttributeName: "QuestionID"
           AttributeType: "S"
       KeySchema: 
         - 
-          AttributeName: "ProfileID"
+          AttributeName: "Classification"
           KeyType: "HASH"
         - 
           AttributeName: "QuestionID"
