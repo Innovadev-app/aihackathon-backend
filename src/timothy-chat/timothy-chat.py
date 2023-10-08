@@ -15,6 +15,22 @@ kendra = boto3.client("kendra")
 # Provide the index ID
 index_id = "0abb1751-862d-4add-bc36-74db23ff0560"
 
+# Load the DynamoDB Client
+dynamodb = boto3.client("dynamodb")
+
+
+def saveRecommendation(classification, recommendation, question):
+    item = {
+        "Classification": {"S": classification},
+        "ProfileID": {"S": "df078db0-ca6c-4187-b5f0-4cc3c7fbb2db"},
+        "QuestionID": {"S": question},
+        "Recommendation": {"S": recommendation},
+    }
+    print(item)
+    response = dynamodb.put_item(TableName="TimothyRecommendationTable", Item=item)
+    print("UPLOADING ITEM")
+    print(response)
+
 
 def bedrockInvoke(lengthIncrements, Temperature, topP, ans, prompt):
     maxTokens = int(lengthIncrements) * int(ans)
@@ -118,6 +134,7 @@ def lambda_handler(event, context):
                     prompt[ref]["Prompt"],
                 )
                 print(json.dumps(bedrockAnswer))
+                saveRecommendation(ref, bedrockAnswer, quest)
 
             if ref == "Scripture" and prompt[ref]["Processor"] == "Bedrock":
                 print("Search Bedrock for Scripture: " + prompt[ref]["Prompt"])
@@ -129,11 +146,13 @@ def lambda_handler(event, context):
                     prompt[ref]["Prompt"],
                 )
                 print(json.dumps(bedrockAnswer))
+                saveRecommendation(ref, bedrockAnswer, quest)
 
             if ref == "Sermon" and prompt[ref]["Processor"] == "Kendra":
                 print("Search Kendra for Sermon: " + prompt[ref]["Prompt"])
                 kendraResponse = kendraSearch(prompt[ref]["Prompt"])
                 print(kendraResponse)
+                saveRecommendation(ref, kendraResponse, quest)
 
     # Return anser to user.
     answer = "End Test"
