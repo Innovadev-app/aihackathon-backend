@@ -7,11 +7,6 @@ def lambda_handler(event, context):
     print("Event Body:")
     print(json.dumps(event["body"]))
 
-    # Get prompt text string from event
-    # print("Decoded Body")
-    # requestBody = urllib.parse.unquote(event["body"])
-    # print(requestBody)
-
     query_result = {}
 
     dynamodb = boto3.client("dynamodb")
@@ -49,6 +44,7 @@ def lambda_handler(event, context):
     prompts = json_content["PromptQuestions"]
 
     responseObject = {}
+    apiResult = []
 
     for prayer in query_result["Prayers"]:
         prayerQuestId = prayer["QuestionID"]["S"]
@@ -61,22 +57,17 @@ def lambda_handler(event, context):
         quest = scripture["QuestionID"]["S"]
 
         if len(responseObject[quest]) == 0:
-            responseObject[quest] = {
-                "Title": prompts[quest],
-                "Body": scripture["Recommendation"]["S"],
-            }
+            apiResult.append(
+                {"Title": prompts[quest], "Body": scripture["Recommendation"]["S"]}
+            )
         else:
-            responseObject[quest]["Body"] = (
-                responseObject[quest]["Body"] + scripture["Recommendation"]["S"]
+            apiResult.append(
+                {
+                    "Title": prompts[quest],
+                    "Body": responseObject[quest]["Body"]
+                    + scripture["Recommendation"]["S"],
+                }
             )
 
-    # print (json.dumps(responseObject))
-
-    # Check answer or set response if no answer
-    # if len(query_result) == 0:
-    #     query_result = "Unable to answer your question at this time.  Please try again later or ask another question."
-
-    print(json.dumps(responseObject))
-
     # Return anser to user.
-    return {"statusCode": 200, "body": json.dumps(responseObject)}
+    return {"statusCode": 200, "body": json.dumps(apiResult)}
