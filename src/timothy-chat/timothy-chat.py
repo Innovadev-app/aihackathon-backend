@@ -92,8 +92,10 @@ def lambda_handler(event, context):
     print(json.dumps(event["body"]))
 
     # Get prompt text string from event
-    requestBody = urllib.parse.unquote(event["body"])
-    answers = requestBody.split("&")
+    # requestBody = urllib.parse.unquote(event["body"])
+    requestBody = event["body"]
+    print(requestBody)
+    # answers = requestBody.split("&")
 
     # Create S3 client and build request body.
     s3 = boto3.client(service_name="s3")
@@ -113,10 +115,12 @@ def lambda_handler(event, context):
     # If prompt is empty, return with an error
     if len(prompts) == 0:
         return {"statusCode": 200, "body": "Please enter your question and try again"}
+    post = json.loads(requestBody)
 
-    for answer in answers:
-        quest = answer.split("=")[0].upper()
-        ans = answer.split("=")[1]
+    for answer in post:
+        print(answer)
+        quest = answer
+        ans = post[answer]
         # print(quest)
         # print(answer)
 

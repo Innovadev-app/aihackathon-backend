@@ -60,7 +60,7 @@ def lambda_handler(event, context):
             apiResult.append(
                 {
                     "title": prompts[quest]["Title"],
-                    "body": scripture["Recommendation"]["S"],
+                    "body": scripture["Recommendation"]["S"] + "\n\n",
                 }
             )
         else:
@@ -68,7 +68,9 @@ def lambda_handler(event, context):
                 {
                     "title": prompts[quest]["Title"],
                     "body": responseObject[quest]["Body"]
-                    + scripture["Recommendation"]["S"],
+                    + "\n\n------------------------------------------------\n\n"
+                    + scripture["Recommendation"]["S"]
+                    + "\n\n",
                 }
             )
 
