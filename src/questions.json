@@ -14,35 +14,83 @@
         }
     },
     "PromptQuestions": {
-        "Q1": "I am a Christian",
-        "Q2": "I am associated to a local church",
-        "Q3": "I am seeking God’s forgiveness",
-        "Q4": "God feels very distant at this time in my life",
-        "Q5": "I have a good knowledge of Bible background and history",
-        "Q6": "I have a good knowledge of the Old Testament",
-        "Q7": "I have a good knowledge of the New Testament",
-        "Q8": "I have a good knowledge of the basic Christian beliefs",
-        "Q9": "I have a good knowledge of the Old Testament",
-        "Q10": "I am part of a group of Christians that holds me accountable",
-        "Q11": "I am involved in Christian-based outreach programs in my community",
-        "Q12": "I don’t have time to read the Bible and pray most days",
-        "Q13": "I don’t have any grudges I have not forgiven",
-        "Q14": "Tithing is a joy for me",
-        "Q15": "I believe God is directly involved in my personal affairs",
-        "Q16": "I often go out of my way to help my neighbor"
+        "Q1": {
+            "Title": "You are a Christian",
+            "Weight": 100
+        },
+        "Q2": {
+            "Title": "You belong to a local church",
+            "Weight": 80
+        },
+        "Q3": {
+            "Title": "You are seeking God’s forgiveness",
+            "Weight": 1
+        },
+        "Q4": {
+            "Title": "God feels very distant at this time in your life",
+            "Weight": 1
+        },
+        "Q5": {
+            "Title": "You have a good knowledge of Bible background and history",
+            "Weight": 1
+        },
+        "Q6": {
+            "Title": "You have a good knowledge of the Old Testament",
+            "Weight": 1
+        },
+        "Q7": {
+            "Title": "You have a good knowledge of the New Testament",
+            "Weight": 1
+        },
+        "Q8": {
+            "Title": "You have a good knowledge of the basic Christian beliefs",
+            "Weight": 1
+        },
+        "Q9": {
+            "Title": "You struggle seeing the value for your life",
+            "Weight": 90
+        },
+        "Q10": {
+            "Title": "You have an accountability partner that helps you with your spiritual journey",
+            "Weight": 1
+        },
+        "Q11": {
+            "Title": "You am involved in Christian-based outreach programs in my community",
+            "Weight": 1
+        },
+        "Q12": {
+            "Title": "You don’t have time to read the Bible and pray most days",
+            "Weight": 1
+        },
+        "Q13": {
+            "Title": "You don’t have any grudges you have not forgiven",
+            "Weight": 1
+        },
+        "Q14": {
+            "Title": "Tithing is a joy for you",
+            "Weight": 1
+        },
+        "Q15": {
+            "Title": "You believe God is directly involved in your personal affairs",
+            "Weight": 1
+        },
+        "Q16": {
+            "Title": "You often go out of your way to help my neighbor",
+            "Weight": 1
+        }
     },
     "Prompts": {
         "Q1": {
             "Prayer": {
                 "Processor": "Bedrock",
-                "Prompt": "recommend a prayer for personal salvation",
+                "Prompt": "recommend a Christian prayer for personal salvation",
                 "Temperature": ".7",
                 "TopP": "1",
                 "LengthIncrements": "150"
             },
             "Scripture": {
                 "Processor": "Bedrock",
-                "Prompt": "recommend scripture related to personal salvation",
+                "Prompt": "recommend scripture from the ESV translation related to personal salvation",
                 "Temperature": ".7",
                 "TopP": "1",
                 "LengthIncrements": "150"
@@ -84,6 +132,376 @@
         "Q3": {
             "Prayer": {
                 "Processor": "Bedrock",
+                "Prompt": "recommend a Christian prayer for dealing with personal guilt and forgivess",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            },
+            "Scripture": {
+                "Processor": "Bedrock",
+                "Prompt": "recommend scripture from ESV translation for dealing with personal guilt and forgivess",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            },
+            "Sermon": {
+                "Processor": "Kendra",
+                "Prompt": "recommend sermons on guilt and forgiveness",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            },
+            "Events": {
+                "Processor": "Kendra",
+                "Prompt": "recommend events related to ...",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            },
+            "Group": {
+                "Processor": "Kendra",
+                "Prompt": "recommend groups related to ...",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            }
+        },
+        "Q4": {
+            "Prayer": {
+                "Processor": "Bedrock",
+                "Prompt": "recommend a Christian prayer when I feel distant or seperated from God",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            },
+            "Scripture": {
+                "Processor": "Bedrock",
+                "Prompt": "recommend scripture from the ESV translation when I feel distant or seperated from God",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            },
+            "Sermon": {
+                "Processor": "Kendra",
+                "Prompt": "recommend sermons related to ...",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            },
+            "Events": {
+                "Processor": "Kendra",
+                "Prompt": "recommend events related to ...",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            },
+            "Group": {
+                "Processor": "Kendra",
+                "Prompt": "recommend groups related to ...",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            }
+        },
+        "Q5": {
+            "Prayer": {
+                "Processor": "Bedrock",
+                "Prompt": "recommend a Christian prayer for the Holy Spirit to guide me in the understanding and application of scripture, to further my spiritual growth in Christ likeness",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            },
+            "Scripture": {
+                "Processor": "Bedrock",
+                "Prompt": "recommend scriptures from the ESV translation for the Holy Spirit to guide me in the understanding and application of scripture, to further my spiritual growth in Christ likeness",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            },
+            "Sermon": {
+                "Processor": "Kendra",
+                "Prompt": "recommend sermons related to ...",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            },
+            "Events": {
+                "Processor": "Kendra",
+                "Prompt": "recommend events related to ...",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            },
+            "Group": {
+                "Processor": "Kendra",
+                "Prompt": "recommend groups related to ...",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            }
+        },
+        "Q6": {
+            "Prayer": {
+                "Processor": "Bedrock",
+                "Prompt": "recommend a Christian prayer for the Holy Spirit to guide me in the understanding and application of the old testament, to further my spiritual growth in Christ likeness",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            },
+            "Scripture": {
+                "Processor": "Bedrock",
+                "Prompt": "recommend how to study and apply the old testament to my life",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            },
+            "Sermon": {
+                "Processor": "Kendra",
+                "Prompt": "recommend sermons related to ...",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            },
+            "Events": {
+                "Processor": "Kendra",
+                "Prompt": "recommend events related to ...",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            },
+            "Group": {
+                "Processor": "Kendra",
+                "Prompt": "recommend groups related to ...",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            }
+        },
+        "Q7": {
+            "Prayer": {
+                "Processor": "Bedrock",
+                "Prompt": "recommend a Christian prayer for the Holy Spirit to guide me in the understanding and application of the new testament, to further my spiritual growth in Christ likeness",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            },
+            "Scripture": {
+                "Processor": "Bedrock",
+                "Prompt": "recommend how to study and apply the new testament to my life",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            },
+            "Sermon": {
+                "Processor": "Kendra",
+                "Prompt": "recommend sermons related to ...",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            },
+            "Events": {
+                "Processor": "Kendra",
+                "Prompt": "recommend events related to ...",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            },
+            "Group": {
+                "Processor": "Kendra",
+                "Prompt": "recommend groups related to ...",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            }
+        },
+        "Q8": {
+            "Prayer": {
+                "Processor": "Bedrock",
+                "Prompt": "what are the basic christian beliefs.  recommend a Christian prayer to help me understand and apply the basic christian beliefs",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            },
+            "Scripture": {
+                "Processor": "Bedrock",
+                "Prompt": "recommend scripture to help me better understand and apply the basic christian beliefs",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            },
+            "Sermon": {
+                "Processor": "Kendra",
+                "Prompt": "recommend sermons related to ...",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            },
+            "Events": {
+                "Processor": "Kendra",
+                "Prompt": "recommend events related to ...",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            },
+            "Group": {
+                "Processor": "Kendra",
+                "Prompt": "recommend groups related to ...",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            }
+        },
+        "Q9": {
+            "Prayer": {
+                "Processor": "Bedrock",
+                "Prompt": "recommend a Christian prayer that helps me understand the value for my life",
+                "Temperature": ".7",
+                "TopP": ".8",
+                "LengthIncrements": "500"
+            },
+            "Scripture": {
+                "Processor": "Bedrock",
+                "Prompt": "recommend scripture from the ESV translation that helps me understand the value for my life",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "200"
+            },
+            "Sermon": {
+                "Processor": "Kendra",
+                "Prompt": "recommend sermons related to ...",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            },
+            "Events": {
+                "Processor": "Kendra",
+                "Prompt": "recommend events related to ...",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            },
+            "Group": {
+                "Processor": "Kendra",
+                "Prompt": "recommend groups related to ...",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            }
+        },
+        "Q10": {
+            "Prayer": {
+                "Processor": "Bedrock",
+                "Prompt": "recommend a Christian prayer to find a good accountability partner",
+                "Temperature": ".7",
+                "TopP": ".8",
+                "LengthIncrements": "500"
+            },
+            "Scripture": {
+                "Processor": "Bedrock",
+                "Prompt": "recommend scripture from the ESV translation related to the value of an accountability partner",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            },
+            "Sermon": {
+                "Processor": "Kendra",
+                "Prompt": "recommend sermons related to ...",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            },
+            "Events": {
+                "Processor": "Kendra",
+                "Prompt": "recommend events related to ...",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            },
+            "Group": {
+                "Processor": "Kendra",
+                "Prompt": "recommend groups related to ...",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            }
+        },
+        "Q11": {
+            "Prayer": {
+                "Processor": "Bedrock",
+                "Prompt": "recommend a Christian prayer to help me understand the value, impact, and purpose of community outreach",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            },
+            "Scripture": {
+                "Processor": "Bedrock",
+                "Prompt": "recommend scripture from the ESV translation to help me understand the value, impact, and purpose of community outreach",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            },
+            "Sermon": {
+                "Processor": "Kendra",
+                "Prompt": "recommend sermons related to ...",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            },
+            "Events": {
+                "Processor": "Kendra",
+                "Prompt": "recommend events related to ...",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            },
+            "Group": {
+                "Processor": "Kendra",
+                "Prompt": "recommend groups related to ...",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            }
+        },
+        "Q12": {
+            "Prayer": {
+                "Processor": "Bedrock",
+                "Prompt": "recommend a Christian prayer to understand the value of prayer, how to create a habit, and to find the time to pray",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            },
+            "Scripture": {
+                "Processor": "Bedrock",
+                "Prompt": "recommend scripture from the ESV translation related to understanding the value of prayer, how to create a habit, and how to find the time to pray",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            },
+            "Sermon": {
+                "Processor": "Kendra",
+                "Prompt": "recommend sermons related to ...",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            },
+            "Events": {
+                "Processor": "Kendra",
+                "Prompt": "recommend events related to ...",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            },
+            "Group": {
+                "Processor": "Kendra",
+                "Prompt": "recommend groups related to ...",
+                "Temperature": ".7",
+                "TopP": "1",
+                "LengthIncrements": "150"
+            }
+        },
+        "Q13": {
+            "Prayer": {
+                "Processor": "Bedrock",
                 "Prompt": "recommend a prayer for ...",
                 "Temperature": ".7",
                 "TopP": "1",
@@ -118,352 +536,37 @@
                 "LengthIncrements": "150"
             }
         },
-        "Q4": {
-            "Prayer": {
-                "Prompt": "recommend a prayer for ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            },
-            "Scripture": {
-                "Prompt": "recommend scripture related to ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            },
-            "Sermon": {
-                "Prompt": "recommend sermons related to ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            },
-            "Events": {
-                "Prompt": "recommend events related to ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            },
-            "Group": {
-                "Prompt": "recommend groups related to ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            }
-        },
-        "Q5": {
-            "Prayer": {
-                "Prompt": "recommend a prayer for ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            },
-            "Scripture": {
-                "Prompt": "recommend scripture related to ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            },
-            "Sermon": {
-                "Prompt": "recommend sermons related to ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            },
-            "Events": {
-                "Prompt": "recommend events related to ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            },
-            "Group": {
-                "Prompt": "recommend groups related to ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            }
-        },
-        "Q6": {
-            "Prayer": {
-                "Prompt": "recommend a prayer for ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            },
-            "Scripture": {
-                "Prompt": "recommend scripture related to ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            },
-            "Sermon": {
-                "Prompt": "recommend sermons related to ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            },
-            "Events": {
-                "Prompt": "recommend events related to ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            },
-            "Group": {
-                "Prompt": "recommend groups related to ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            }
-        },
-        "Q7": {
-            "Prayer": {
-                "Prompt": "recommend a prayer for ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            },
-            "Scripture": {
-                "Prompt": "recommend scripture related to ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            },
-            "Sermon": {
-                "Prompt": "recommend sermons related to ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            },
-            "Events": {
-                "Prompt": "recommend events related to ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            },
-            "Group": {
-                "Prompt": "recommend groups related to ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            }
-        },
-        "Q8": {
-            "Prayer": {
-                "Prompt": "recommend a prayer for ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            },
-            "Scripture": {
-                "Prompt": "recommend scripture related to ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            },
-            "Sermon": {
-                "Prompt": "recommend sermons related to ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            },
-            "Events": {
-                "Prompt": "recommend events related to ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            },
-            "Group": {
-                "Prompt": "recommend groups related to ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            }
-        },
-        "Q9": {
-            "Prayer": {
-                "Prompt": "recommend a prayer for ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            },
-            "Scripture": {
-                "Prompt": "recommend scripture related to ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            },
-            "Sermon": {
-                "Prompt": "recommend sermons related to ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            },
-            "Events": {
-                "Prompt": "recommend events related to ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            },
-            "Group": {
-                "Prompt": "recommend groups related to ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            }
-        },
-        "Q10": {
-            "Prayer": {
-                "Prompt": "recommend a prayer for ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            },
-            "Scripture": {
-                "Prompt": "recommend scripture related to ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            },
-            "Sermon": {
-                "Prompt": "recommend sermons related to ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            },
-            "Events": {
-                "Prompt": "recommend events related to ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            },
-            "Group": {
-                "Prompt": "recommend groups related to ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            }
-        },
-        "Q11": {
-            "Prayer": {
-                "Prompt": "recommend a prayer for ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            },
-            "Scripture": {
-                "Prompt": "recommend scripture related to ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            },
-            "Sermon": {
-                "Prompt": "recommend sermons related to ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            },
-            "Events": {
-                "Prompt": "recommend events related to ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            },
-            "Group": {
-                "Prompt": "recommend groups related to ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            }
-        },
-        "Q12": {
-            "Prayer": {
-                "Prompt": "recommend a prayer for ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            },
-            "Scripture": {
-                "Prompt": "recommend scripture related to ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            },
-            "Sermon": {
-                "Prompt": "recommend sermons related to ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            },
-            "Events": {
-                "Prompt": "recommend events related to ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            },
-            "Group": {
-                "Prompt": "recommend groups related to ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            }
-        },
-        "Q13": {
-            "Prayer": {
-                "Prompt": "recommend a prayer for ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            },
-            "Scripture": {
-                "Prompt": "recommend scripture related to ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            },
-            "Sermon": {
-                "Prompt": "recommend sermons related to ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            },
-            "Events": {
-                "Prompt": "recommend events related to ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            },
-            "Group": {
-                "Prompt": "recommend groups related to ...",
-                "Temperature": ".7",
-                "TopP": "1",
-                "LengthIncrements": "150"
-            }
-        },
         "Q14": {
             "Prayer": {
+                "Processor": "Bedrock",
                 "Prompt": "recommend a prayer for ...",
                 "Temperature": ".7",
                 "TopP": "1",
                 "LengthIncrements": "150"
             },
             "Scripture": {
+                "Processor": "Bedrock",
                 "Prompt": "recommend scripture related to ...",
                 "Temperature": ".7",
                 "TopP": "1",
                 "LengthIncrements": "150"
             },
             "Sermon": {
+                "Processor": "Kendra",
                 "Prompt": "recommend sermons related to ...",
                 "Temperature": ".7",
                 "TopP": "1",
                 "LengthIncrements": "150"
             },
             "Events": {
+                "Processor": "Kendra",
                 "Prompt": "recommend events related to ...",
                 "Temperature": ".7",
                 "TopP": "1",
                 "LengthIncrements": "150"
             },
             "Group": {
+                "Processor": "Kendra",
                 "Prompt": "recommend groups related to ...",
                 "Temperature": ".7",
                 "TopP": "1",
@@ -472,30 +575,35 @@
         },
         "Q15": {
             "Prayer": {
+                "Processor": "Bedrock",
                 "Prompt": "recommend a prayer for ...",
                 "Temperature": ".7",
                 "TopP": "1",
                 "LengthIncrements": "150"
             },
             "Scripture": {
+                "Processor": "Bedrock",
                 "Prompt": "recommend scripture related to ...",
                 "Temperature": ".7",
                 "TopP": "1",
                 "LengthIncrements": "150"
             },
             "Sermon": {
+                "Processor": "Kendra",
                 "Prompt": "recommend sermons related to ...",
                 "Temperature": ".7",
                 "TopP": "1",
                 "LengthIncrements": "150"
             },
             "Events": {
+                "Processor": "Kendra",
                 "Prompt": "recommend events related to ...",
                 "Temperature": ".7",
                 "TopP": "1",
                 "LengthIncrements": "150"
             },
             "Group": {
+                "Processor": "Kendra",
                 "Prompt": "recommend groups related to ...",
                 "Temperature": ".7",
                 "TopP": "1",
@@ -504,30 +612,35 @@
         },
         "Q16": {
             "Prayer": {
+                "Processor": "Bedrock",
                 "Prompt": "recommend a prayer for ...",
                 "Temperature": ".7",
                 "TopP": "1",
                 "LengthIncrements": "150"
             },
             "Scripture": {
+                "Processor": "Bedrock",
                 "Prompt": "recommend scripture related to ...",
                 "Temperature": ".7",
                 "TopP": "1",
                 "LengthIncrements": "150"
             },
             "Sermon": {
+                "Processor": "Kendra",
                 "Prompt": "recommend sermons related to ...",
                 "Temperature": ".7",
                 "TopP": "1",
                 "LengthIncrements": "150"
             },
             "Events": {
+                "Processor": "Kendra",
                 "Prompt": "recommend events related to ...",
                 "Temperature": ".7",
                 "TopP": "1",
                 "LengthIncrements": "150"
             },
             "Group": {
+                "Processor": "Kendra",
                 "Prompt": "recommend groups related to ...",
                 "Temperature": ".7",
                 "TopP": "1",

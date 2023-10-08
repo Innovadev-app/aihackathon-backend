@@ -49,7 +49,7 @@ def lambda_handler(event, context):
     for prayer in query_result["Prayers"]:
         prayerQuestId = prayer["QuestionID"]["S"]
         responseObject[prayerQuestId] = {
-            "Title": prompts[prayerQuestId],
+            "Title": prompts[prayerQuestId]["Title"],
             "Body": prayer["Recommendation"]["S"],
         }
 
@@ -58,13 +58,16 @@ def lambda_handler(event, context):
 
         if len(responseObject[quest]) == 0:
             apiResult.append(
-                {"Title": prompts[quest], "Body": scripture["Recommendation"]["S"]}
+                {
+                    "title": prompts[quest]["Title"],
+                    "body": scripture["Recommendation"]["S"],
+                }
             )
         else:
             apiResult.append(
                 {
-                    "Title": prompts[quest],
-                    "Body": responseObject[quest]["Body"]
+                    "title": prompts[quest]["Title"],
+                    "body": responseObject[quest]["Body"]
                     + scripture["Recommendation"]["S"],
                 }
             )
